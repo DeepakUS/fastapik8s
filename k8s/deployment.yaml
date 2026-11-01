@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapik8s-demo
+  template:
+    metadata:
+      labels:
+        app: fastapik8s-demo
+    spec:
+      containers:
+        - name: fastapik8s-demo
+          image: demo-fastapik8s:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: APP_VERSION
+              value: "v2.0.0"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
