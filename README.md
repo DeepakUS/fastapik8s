@@ -43,6 +43,18 @@ minikube start --cpus=4 --memory=4096 --driver=docker
 # Starts cluster with specified k8s version
 minikube start --kubernetes-version=v1.28.0
 
+# Start a cluster with 3 nodes (1 master, 2 workers)
+minikube start --nodes 3 -p multinode-demo
+
+# Add a new worker node to the active cluster
+minikube node add -p multinode-demo
+
+# Add a specific node type (e.g., an additional control plane for High Availability)
+minikube node add --control-plane -p multinode-demo
+
+# Remove a specific node from the cluster
+minikube node delete multinode-demo-m02 -p multinode-demo
+
 # Delete the existing profile or already created cluster
 minikube delete 
 ```
@@ -212,8 +224,28 @@ Example response:
 # Start Minikube
 minikube start
 
+# Minikube profile. Shows its driver, container runtime, status, # of nodes
+minikube profile list
+
 # Open the Kubernetes dashboard
 minikube dashboard
+
+# Open the Kubernetes dashboard with url
+minikube dashboard --url
+
+# List Default Addons / Plugins
+minikube addons list
+
+# Enable Addons / Plugins
+minikube addons enable csi-hostpath-driver
+
+# Instal non avialble addons using Helm
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+# Install downloaded AddOns as namespace eg monitoring stack here
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+
+
 
 # Stop Minikube
 minikube stop
