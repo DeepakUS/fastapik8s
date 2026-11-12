@@ -7,7 +7,8 @@
 brew install kubectl minikube
 
 # Start Minikube with the Docker driver
-minikube start --cpus=4 --memory=4096 --driver=docker
+minikube start --driver=docker
+# minikube start --cpus=4 --memory=4096 --driver=docker
 
 ```
 
@@ -23,7 +24,8 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
 # Start Minikube
-minikube start --cpus=4 --memory=4096 --driver=docker
+minikube start --driver=docker
+# minikube start --cpus=4 --memory=4096 --driver=docker
 ```
 
 ## Windows (Chocolatey or PowerShell)
@@ -33,7 +35,8 @@ minikube start --cpus=4 --memory=4096 --driver=docker
 choco install kubernetes-cli minikube
 
 # Start Minikube using Docker Desktop or Hyper-V
-minikube start --cpus=4 --memory=4096 --driver=docker
+minikube start --driver=docker
+# minikube start --cpus=4 --memory=4096 --driver=docker
 ```
 
 ## Some usefull commands
@@ -193,12 +196,19 @@ kubectl label namespace default istio-injection=enabled
 minikube status
 
 # Apply Kubernetes manifests
+kubectl apply -f k8s/replicaset.yaml
+kubectl apply -f k8s/pod.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 
-# Check pod status
+# get objects
+kubectl get rs
+kubectl get deploy
 kubectl get pods
 kubectl get svc
+
+# Scaling
+kubectl scale deployments/fastapi-demo --replicas=3
 ```
 
 ## Test the Application
@@ -206,6 +216,9 @@ kubectl get svc
 ```bash
 # Port-forward the service to your local machine
 kubectl port-forward service/fastapik8s-demo 8000:80
+OR
+minikube service fastapik8s-demo --url
+# with the output ip and port you can call the service. Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 
 # In another terminal, test the endpoints
 curl http://localhost:8000/
