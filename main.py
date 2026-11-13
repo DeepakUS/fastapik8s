@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-APP_VERSION = os.getenv("APP_VERSION", "v2.0.0")
+APP_VERSION = os.getenv("APP_VERSION", "v1.0.0")
 
 @app.get("/")
 def read_root():
