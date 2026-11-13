@@ -1,0 +1,36 @@
+flowchart TD
+    A[Phase 1: Installation] --> A1[Install Docker]
+    A --> A2[Install kubectl + Minikube]
+    A --> A3[Install Podman]
+
+    A1 --> B[Phase 2: Minikube Startup and Cluster Setup]
+    A2 --> B
+    A3 --> B
+
+    B --> B1[Start Minikube]
+    B --> B2[Verify cluster readiness]
+    B --> B3[Enable addons / Istio]
+
+    B1 --> C[Phase 3: Build Phase]
+    B2 --> C
+    B3 --> C
+
+    C --> C1[Build Docker image]
+    C --> C2[Build Podman image]
+
+    C1 --> D[Phase 4: Deployment Phase]
+    C2 --> D
+
+    D --> D1[Apply Kubernetes manifests]
+    D --> D2[Check deployed resources]
+    D --> D3[Scale deployment]
+
+    D1 --> E[Phase 5: Testing Phase]
+    D2 --> E
+    D3 --> E
+
+    E --> E1[Expose service]
+    E --> E2[Test endpoints]
+    E --> E3[Validate logs / pod status]
+
+    E2 --> F[App Running Successfully]
