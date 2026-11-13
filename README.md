@@ -223,8 +223,8 @@ podman run --rm -p 8000:8000 demo-fastapi:v1
 minikube status
 
 # Apply the app resources
-kubectl apply -f k8s/replicaset.yaml
 kubectl apply -f k8s/pod.yaml
+kubectl apply -f k8s/replicaset.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
